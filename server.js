@@ -37,7 +37,7 @@ app.post("/app/new/user", (req, res) => {
 // READ a list of all users (HTTP method GET) at endpoint /app/users/
 app.get("/app/users", (req, res) => {	
 	const stmt = db.prepare("SELECT * FROM userinfo").all();
-	res.json({"id":req.params.id, "user": req.params.user , "pass": req.params.pass});
+	res.json({"id":req.body.id, "user": req.body.user , "pass": req.body.pass});
 	res.status(200).json(stmt);
 });
 
