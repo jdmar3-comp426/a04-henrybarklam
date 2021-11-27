@@ -1,17 +1,20 @@
 // Define app using express
-var express = require("express")
-var app = express()
+var express = require("express");
+var app = express();
 // Require database SCRIPT file
-var db = require("./database.js")
+var db = require("./database.js");
 // Require md5 MODULE
-var md5 = require("md5")
+var md5 = require("md5");
+
+//Require a middleware extension for express
+var bodyParser = require("body-parser");
 
 // Make Express use its own built-in body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Set server port
-var HTTP_PORT = 5000
+var HTTP_PORT = 5000;
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT))
@@ -27,12 +30,12 @@ app.get("/app/", (req, res, next) => {
 
 //Could be an issue here - if so change back to /app/new/
 app.post("/app/new/user", (req, res) => {
-	const getOne = db.prepare("INSERT INTO userinfo (user,pass) VALUES (?,?)").run()
+	const getOne = db.prepare("INSERT INTO userinfo (user,pass) VALUES (?,?)").run();
 	res.json({"message":"Created (201)"});
-	res.status(201).json(getOne)
+	res.status(201).json(getOne);
 });
 // READ a list of all users (HTTP method GET) at endpoint /app/users/
-app.get("/app/users/", (req, res) => {	
+app.get("/app/users", (req, res) => {	
 	const stmt = db.prepare("SELECT * FROM userinfo").all();
 	res.json({"message":"OK (200)"});
 	res.status(200).json(stmt);
@@ -40,21 +43,21 @@ app.get("/app/users/", (req, res) => {
 
 // READ a single user (HTTP method GET) at endpoint /app/user/:id
 app.get("/app/user/:id", (req, res) => {
-	const getOne = db.prepare("SELECT * FROM userinfo where id = ?").get()
+	const getOne = db.prepare("SELECT * FROM userinfo where id = ?").get();
 	res.json({"message":"OK (200)"});
-	res.status(200).json(getOne)
+	res.status(200).json(getOne);
 });
 // UPDATE a single user (HTTP method PATCH) at endpoint /app/update/user/:id
 app.patch("/app/update/user/:id", (req, res) => {
-	const getOne = db.prepare("UPDATE userinfo SET user = COALESCE(?,user), pass = COALESCE(?,pass) WHERE id = ?").run()
+	const getOne = db.prepare("UPDATE userinfo SET user = COALESCE(?,user), pass = COALESCE(?,pass) WHERE id = ?").run();
 	res.json({"message":"OK (200)"});
-	res.status(405).json(getOne)
+	res.status(405).json(getOne);
 });
 // DELETE a single user (HTTP method DELETE) at endpoint /app/delete/user/:id
 app.delete("/app/delete/user/:id", (req, res) => {
-	const getOne = db.prepare("DELETE FROM userinfo WHERE id = ?").run()
+	const getOne = db.prepare("DELETE FROM userinfo WHERE id = ?").run();
 	res.json({"message":"OK (200)"});
-	res.status(405).json(getOne)
+	res.status(405).json(getOne);
 });
 // Default response for any other request
 app.use(function(req, res){
