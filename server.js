@@ -31,7 +31,7 @@ app.get("/app/", (req, res, next) => {
 //Could be an issue here - if so change back to /app/new/
 app.post("/app/new/user", (req, res) => {
 	const getOne = db.prepare("INSERT INTO userinfo (user,pass) VALUES (?,?)").run();
-	res.json({"message":"Created (201)"});
+	res.json({"id":id, "user": user });
 	res.status(201).json(getOne);
 });
 // READ a list of all users (HTTP method GET) at endpoint /app/users/
@@ -43,7 +43,7 @@ app.get("/app/users", (req, res) => {
 
 // READ a single user (HTTP method GET) at endpoint /app/user/:id
 app.get("/app/user/:id", (req, res) => {
-	const getOne = db.prepare("SELECT * FROM userinfo where id = ?").get();
+	const getOne = db.prepare("SELECT * FROM userinfo where id = ?").get(id);
 	res.json({"message":"OK (200)"});
 	res.status(200).json(getOne);
 });
