@@ -32,8 +32,9 @@ app.get("/app/", (req, res, next) => {
 //Could be an issue here - if so change back to /app/new/
 app.post("/app/new/user", (req, res) => {
 	const getOne = db.prepare("INSERT INTO userinfo (user,pass) VALUES (?,?)").run();
-	res.json({"id":req.params.id, "user": user , "pass": pass});
+	// res.json({"id":req.params.id, "user": user , "pass": pass});
 	res.status(201).json(getOne);
+	return
 });
 // READ a list of all users (HTTP method GET) at endpoint /app/users/
 app.get("/app/users", (req, res) => {	
