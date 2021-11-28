@@ -21,8 +21,9 @@ app.listen(HTTP_PORT, () => {
 });
 // READ (HTTP method GET) at root endpoint /app/
 app.get("/app/", (req, res, next) => {
-    res.json({"message":"OK (200)"});
+    res.json({"message":"Your API works! (200)"});
 	res.status(200);
+	return
 });
 
 // Define other CRUD API endpoints using express.js and better-sqlite3
