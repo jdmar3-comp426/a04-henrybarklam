@@ -59,15 +59,18 @@ app.patch("/app/update/user/:id", (req, res) => {
 	const getOne = db.prepare("UPDATE userinfo SET user = COALESCE(?,user), pass = COALESCE(?,pass) WHERE id = ?").run(req.params.id);
 	// res.json({"message":"OK (200)"});
 	res.status(405).json(getOne);
+	return
 });
 // DELETE a single user (HTTP method DELETE) at endpoint /app/delete/user/:id
 app.delete("/app/delete/user/:id", (req, res) => {
 	const getOne = db.prepare("DELETE FROM userinfo WHERE id = ?").run(req.params.id);
 	// res.json({"message":"OK (200)"});
 	res.status(405).json(getOne);
+	return
 });
 // Default response for any other request
 app.use(function(req, res){
 	res.json({"message":"Your API is working"});
     res.status(404);
+	return
 });
