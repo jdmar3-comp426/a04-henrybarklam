@@ -47,8 +47,8 @@ app.get("/app/user/:id", (req, res) => {
 });
 
 //Could be an issue here - if so change back to /app/new/
-app.post("/app/new/user", (req, res) => {
-	const getOne = db.prepare("INSERT INTO userinfo (user,pass) VALUES (?,?)").run(req.params.user);
+app.post("/app/new/", (req, res) => {
+	const getOne = db.prepare("INSERT INTO userinfo (user,pass) VALUES (?,?)").run(req.params.id);
 	// res.json({"id":req.params.id, "user": user , "pass": pass});
 	res.status(201).json(getOne);
 	return
