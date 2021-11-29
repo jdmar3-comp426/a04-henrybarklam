@@ -51,7 +51,7 @@ app.post("/app/new/", (req, res) => {
 	const getOne = db.prepare("INSERT INTO userinfo (user,pass) VALUES (?,?)").run(req.body.user, req.body.pass);
 	// res.json({"id":req.params.id, "user": user , "pass": pass});
 	res.status(201).json({"message": `${getOne["changes"]} record created: ID ${getOne["lastInsertRowid"]} (201)`});
-	
+	getOne["pass"] = md5(req.body.pass);
 	return
 });
 
