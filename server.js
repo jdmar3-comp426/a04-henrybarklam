@@ -43,7 +43,7 @@ app.get("/app/user/:id", (req, res) => {
 	const getOne = db.prepare("SELECT * FROM userinfo where id = ?").get(req.params.id);
 	// res.json({"message":"OK (200)"});
 	res.status(200).json(getOne);
-	return
+	return getOne
 });
 
 //Could be an issue here - if so change back to /app/new/
